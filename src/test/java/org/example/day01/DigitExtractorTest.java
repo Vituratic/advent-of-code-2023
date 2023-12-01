@@ -21,10 +21,13 @@ class DigitExtractorTest {
 
     private static Stream<Arguments> provideFindFirstParameters() {
         return Stream.of(
-                Arguments.of("1abc2", "1"),
-                Arguments.of("pqr3stu8vwx", "3"),
-                Arguments.of("a1b2c3d4e5f", "1"),
-                Arguments.of("treb7uchet", "7")
+                Arguments.of("two1nine", "2"),
+                Arguments.of("eightwothree", "8"),
+                Arguments.of("abcone2threexyz", "1"),
+                Arguments.of("xtwone3four", "2"),
+                Arguments.of("4nineeightseven2", "4"),
+                Arguments.of("zoneight234", "1"),
+                Arguments.of("7pqrstsixteen", "7")
         );
     }
 
@@ -37,10 +40,13 @@ class DigitExtractorTest {
 
     private static Stream<Arguments> provideFindLastParameters() {
         return Stream.of(
-                Arguments.of("1abc2", "2"),
-                Arguments.of("pqr3stu8vwx", "8"),
-                Arguments.of("a1b2c3d4e5f", "5"),
-                Arguments.of("treb7uchet", "7")
+                Arguments.of("two1nine", "9"),
+                Arguments.of("eightwothree", "3"),
+                Arguments.of("abcone2threexyz", "3"),
+                Arguments.of("xtwone3four", "4"),
+                Arguments.of("4nineeightseven2", "2"),
+                Arguments.of("zoneight234", "4"),
+                Arguments.of("7pqrstsixteen", "6")
         );
     }
 }

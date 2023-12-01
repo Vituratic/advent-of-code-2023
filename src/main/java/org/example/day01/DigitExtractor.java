@@ -11,6 +11,18 @@ public class DigitExtractor {
     }
 
     private String removeCharactersFromString(String inputString) {
-        return inputString.replaceAll("[A-Za-z]", "");
+        return replaceAllWrittenNumbersByDigits(inputString).replaceAll("[A-Za-z]", "");
+    }
+
+    private String replaceAllWrittenNumbersByDigits(String inputString) {
+        return inputString.replace("one", "o1e")
+                .replace("two", "t2o")
+                .replace("three", "t3e")
+                .replace("four", "f4r")
+                .replace("five", "f5e")
+                .replace("six", "s6x")
+                .replace("seven", "s7n")
+                .replace("eight", "e8t")
+                .replace("nine", "n9e");
     }
 }
