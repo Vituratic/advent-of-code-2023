@@ -13,14 +13,19 @@ class Main {
         List<String> gameLines = ResourceReader.readAllLinesFromResource("org/example/day02/input.txt");
         CubeGameEvaluator cubeGameEvaluator = new CubeGameEvaluator(12, 13, 14);
         List<Integer> idsOfPossibleGames = new ArrayList<>();
+        List<Integer> minimumRequiredPowersOfSets = new ArrayList<>();
         for (String game : gameLines) {
             boolean isPossible = cubeGameEvaluator.evalutePossibility(game);
             if (isPossible) {
                 int gameId = Integer.parseInt(game.split(":")[0].trim().split("\\s")[1]);
                 idsOfPossibleGames.add(gameId);
             }
+            int minimumSetPower = cubeGameEvaluator.getMinimumSetPower(game);
+            minimumRequiredPowersOfSets.add(minimumSetPower);
         }
         int sumOfIdsOfPossibleGames = idsOfPossibleGames.stream().mapToInt(Integer::intValue).sum();
         log.info("Sum of Ids of possible games: {}", sumOfIdsOfPossibleGames);
+        int sumOfRequiredPowers = minimumRequiredPowersOfSets.stream().mapToInt(Integer::intValue).sum();
+        log.info("Sum of the minimum required powers: {}", sumOfRequiredPowers);
     }
 }

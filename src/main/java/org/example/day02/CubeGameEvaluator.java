@@ -31,4 +31,25 @@ public class CubeGameEvaluator {
         String amountOfCubes = cube.trim().split("\\s")[0];
         return Integer.parseInt(amountOfCubes);
     }
+
+    public int getMinimumSetPower(String inputLine) {
+        String[] split = inputLine.split(":");
+        String[] sets = split[1].split(";");
+        int minimumAmountOfRedCubes = 0;
+        int minimumAmountOfGreenCubes = 0;
+        int minimumAmountOfBlueCubes = 0;
+        for (String set : sets) {
+            String[] cubes = set.split(",");
+            for (String cube : cubes) {
+                if (cube.endsWith("red")) {
+                    minimumAmountOfRedCubes = Math.max(minimumAmountOfRedCubes, getAmountOfCubes(cube));
+                } else if (cube.endsWith("green")) {
+                    minimumAmountOfGreenCubes = Math.max(minimumAmountOfGreenCubes, getAmountOfCubes(cube));
+                } else {
+                    minimumAmountOfBlueCubes = Math.max(minimumAmountOfBlueCubes, getAmountOfCubes(cube));
+                }
+            }
+        }
+        return minimumAmountOfRedCubes * minimumAmountOfGreenCubes * minimumAmountOfBlueCubes;
+    }
 }
