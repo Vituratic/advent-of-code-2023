@@ -33,4 +33,10 @@ class EngineSchematicEvaluatorTest {
         int actualSum = engineSchematicEvaluator.getSumOfAllPartNumbers(TEST_INPUTS);
         assertEquals(4361, actualSum);
     }
+
+    @Test
+    void testGetSumOfAllGearRatios() {
+        int actualGearRatio = engineSchematicEvaluator.getSumOfAllGearRatios(TEST_INPUTS);
+        assertEquals(467835, actualGearRatio);
+    }
 }

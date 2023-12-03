@@ -12,5 +12,7 @@ class Main {
         EngineSchematicEvaluator engineSchematicEvaluator = new EngineSchematicEvaluator();
         int sumOfAllPartNumbers = engineSchematicEvaluator.getSumOfAllPartNumbers(input);
         log.info("Sum of all part numbers: {}", sumOfAllPartNumbers);
+        int sumOfAllGearRatios = engineSchematicEvaluator.getSumOfAllGearRatios(input);
+        log.info("Sum of all gear ratios: {}", sumOfAllGearRatios);
     }
 }

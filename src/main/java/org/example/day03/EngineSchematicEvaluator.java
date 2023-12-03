@@ -1,7 +1,6 @@
 package org.example.day03;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static java.lang.Character.isDigit;
 
@@ -60,5 +59,75 @@ class EngineSchematicEvaluator {
 
     private boolean isValidPartNumberSymbol(char c) {
         return !isDigit(c) && c != '.';
+    }
+
+    public int getSumOfAllGearRatios(List<String> input) {
+        List<Integer> gearRatios = new ArrayList<>();
+        for (int row = 0; row < input.size(); row++) {
+            char[] line = input.get(row).toCharArray();
+            for (int column = 0; column < line.length; column++) {
+                if (line[column] == '*' && getAmountOfAdjacentPartNumbers(input, row, column) == 2) {
+                    gearRatios.add(getGearRatio(input, row, column));
+                }
+            }
+        }
+        return gearRatios.stream().mapToInt(Integer::intValue).sum();
+    }
+
+    private int getAmountOfAdjacentPartNumbers(List<String> lines, int row, int column) {
+        List<Integer> partNumbers = new ArrayList<>();
+
+        int startingRow = Math.max(0, row - 1);
+        int finishingRow = Math.min(row + 1, lines.size() - 1);
+        int startingColumn = Math.max(0, column - 1);
+        int finishingColumn = Math.min(column + 1, lines.get(0).length() - 1);
+
+        for (int currentRow = startingRow; currentRow <= finishingRow; currentRow++) {
+            Set<Integer> rowNumbers = new HashSet<>();
+            for (int currentColumn = startingColumn; currentColumn <= finishingColumn; currentColumn++) {
+                getPartNumber(lines.get(currentRow), currentColumn).ifPresent(rowNumbers::add);
+            }
+            partNumbers.addAll(rowNumbers);
+        }
+
+        return partNumbers.size();
+    }
+
+    private int getGearRatio(List<String> lines, int row, int column) {
+        List<Integer> partNumbers = new ArrayList<>();
+
+        int startingRow = Math.max(0, row - 1);
+        int finishingRow = Math.min(row + 1, lines.size() - 1);
+        int startingColumn = Math.max(0, column - 1);
+        int finishingColumn = Math.min(column + 1, lines.get(0).length() - 1);
+
+        for (int currentRow = startingRow; currentRow <= finishingRow; currentRow++) {
+            Set<Integer> rowNumbers = new HashSet<>();
+            for (int currentColumn = startingColumn; currentColumn <= finishingColumn; currentColumn++) {
+                getPartNumber(lines.get(currentRow), currentColumn).ifPresent(rowNumbers::add);
+            }
+            partNumbers.addAll(rowNumbers);
+        }
+
+        return partNumbers.stream().reduce((a, b) -> a * b)
+                .orElseThrow(() -> new RuntimeException("Could not find two gear ratios for row " + row + " and column " + column));
+    }
+
+    private Optional<Integer> getPartNumber(String line, int providedIndex) {
+        if (!isDigit(line.charAt(providedIndex))) {
+            return Optional.empty();
+        }
+
+        int firstDigitIndex = providedIndex;
+        int lastDigitIndex = providedIndex;
+        int currentIndex = firstDigitIndex - 1;
+        while (currentIndex >= 0 && isDigit(line.charAt(currentIndex))) {
+            firstDigitIndex = currentIndex--;
+        }
+        currentIndex = lastDigitIndex + 1;
+        while (currentIndex <= line.length() - 1 && isDigit(line.charAt(currentIndex))) {
+            lastDigitIndex = currentIndex++;
+        }
+        return Optional.of(Integer.parseInt(line.substring(firstDigitIndex, lastDigitIndex + 1)));
     }
 }
