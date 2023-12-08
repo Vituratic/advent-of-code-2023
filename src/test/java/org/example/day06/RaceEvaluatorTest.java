@@ -23,7 +23,8 @@ class RaceEvaluatorTest {
         return Stream.of(
                 Arguments.of(new Race(7, 9), 4),
                 Arguments.of(new Race(15, 40), 8),
-                Arguments.of(new Race(30, 200), 9)
+                Arguments.of(new Race(30, 200), 9),
+                Arguments.of(new Race(71530, 940200L), 71503)
         );
     }
 }

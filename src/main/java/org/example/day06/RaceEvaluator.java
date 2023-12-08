@@ -4,10 +4,10 @@ class RaceEvaluator {
     public int getNumberOfWaysToWinTheRace(Race input) {
         int amountOfWaysToWinTheRace = 0;
         int raceDuration = input.time();
-        int distanceToBeat = input.distance();
+        long distanceToBeat = input.distance();
         for (int buttonHeldDuration = 1; buttonHeldDuration < raceDuration; buttonHeldDuration++) {
             int timeLeftInRace = raceDuration - buttonHeldDuration;
-            int distanceToBeTraveled = timeLeftInRace * buttonHeldDuration;
+            long distanceToBeTraveled = (long) timeLeftInRace * buttonHeldDuration;
             if (distanceToBeTraveled > distanceToBeat) {
                 amountOfWaysToWinTheRace++;
             }
