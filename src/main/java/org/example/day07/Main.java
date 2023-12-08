@@ -11,20 +11,26 @@ class Main {
 
     public static void main(String[] args) {
         List<String> lines = ResourceReader.readAllLinesFromResource("org/example/day07/input.txt");
-        List<Hand> hands = new ArrayList<>();
+        List<Hand> handsNoWildcard = new ArrayList<>();
+        List<Hand> handsWildcard = new ArrayList<>();
         for (String line : lines) {
             String[] parts = line.split("\\s+");
             List<Card> cards = new ArrayList<>();
             for (char cardIdentifier : parts[0].toCharArray()) {
                 cards.add(Card.fromIdentifier(cardIdentifier));
             }
-            hands.add(new Hand(cards, Integer.parseInt(parts[1])));
+            handsNoWildcard.add(new Hand(cards, Integer.parseInt(parts[1]), false));
+            handsWildcard.add(new Hand(cards, Integer.parseInt(parts[1]), true));
         }
-        hands.sort(Hand::compareTo);
-        long totalWinnings = 0L;
-        for (int i = 0; i < hands.size(); i++) {
-            totalWinnings += hands.get(i).getBid() * (i + 1L);
+        handsNoWildcard.sort(Hand::compareTo);
+        handsWildcard.sort(Hand::compareTo);
+        long totalWinningsNoWildcard = 0L;
+        long totalWinningsWildcard = 0L;
+        for (int i = 0; i < handsNoWildcard.size(); i++) {
+            totalWinningsNoWildcard += handsNoWildcard.get(i).getBid() * (i + 1L);
+            totalWinningsWildcard += handsWildcard.get(i).getBid() * (i + 1L);
         }
-        log.info("Total winnings: {}", totalWinnings);
+        log.info("Total winnings without joker as wildcard: {}", totalWinningsNoWildcard);
+        log.info("Total winnings with joker as wildcard: {}", totalWinningsWildcard);
     }
 }
