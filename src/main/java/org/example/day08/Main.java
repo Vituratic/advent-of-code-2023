@@ -1,9 +1,11 @@
 package org.example.day08;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.util.LeastCommonMultiple;
 import org.example.util.Pair;
 import org.example.util.ResourceReader;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +25,17 @@ class Main {
             networkNodes.put(key, leftRight);
         }
 
-        int amountOfRequiredStepsToReachZZZ = networkNodeTraverser.getAmountOfRequiredStepsToReachZZZ("AAA", networkNodes.get("AAA"), instructions, networkNodes);
+        long amountOfRequiredStepsToReachZZZ = networkNodeTraverser.getAmountOfRequiredStepsToReachKeyPattern("AAA", "ZZZ", networkNodes.get("AAA"), instructions, networkNodes);
         log.info("Amount of required steps to reach ZZZ: {}", amountOfRequiredStepsToReachZZZ);
+
+        List<Long> stepsRequiredPer = new ArrayList<>();
+        for (var entry : networkNodes.entrySet()) {
+            if (entry.getKey().matches(".*A")) {
+                long stepsRequired = networkNodeTraverser.getAmountOfRequiredStepsToReachKeyPattern(entry.getKey(), ".*Z", networkNodes.get(entry.getKey()), instructions, networkNodes);
+                stepsRequiredPer.add(stepsRequired);
+            }
+        }
+        long amountOfRequiredStepsToReachZGhostly = stepsRequiredPer.stream().reduce(LeastCommonMultiple::get).get();
+        log.info("Amount of required steps to reach *Z ghostly: {}", amountOfRequiredStepsToReachZGhostly);
     }
 }

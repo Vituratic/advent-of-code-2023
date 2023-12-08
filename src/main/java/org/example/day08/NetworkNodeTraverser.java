@@ -8,7 +8,7 @@ public class NetworkNodeTraverser {
 
     private static final char LEFT = 'L';
 
-    public int getAmountOfRequiredStepsToReachZZZ(String startKey, Pair<String, String> startNode, String instructions, Map<String, Pair<String, String>> networkNodes) {
+    public int getAmountOfRequiredStepsToReachKeyPattern(String startKey, String keyPattern, Pair<String, String> startNode, String instructions, Map<String, Pair<String, String>> networkNodes) {
         var node = startNode;
         String currentKey = startKey;
         int amountOfRequiredSteps = 0;
@@ -21,8 +21,8 @@ public class NetworkNodeTraverser {
             node = networkNodes.get(currentKey);
             amountOfRequiredSteps++;
         }
-        if (!currentKey.equals("ZZZ")) {
-            return amountOfRequiredSteps + getAmountOfRequiredStepsToReachZZZ(currentKey, node, instructions, networkNodes);
+        if (!currentKey.matches(keyPattern)) {
+            return amountOfRequiredSteps + getAmountOfRequiredStepsToReachKeyPattern(currentKey, keyPattern, node, instructions, networkNodes);
         }
         return amountOfRequiredSteps;
     }
