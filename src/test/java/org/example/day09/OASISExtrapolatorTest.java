@@ -31,17 +31,32 @@ class OASISExtrapolatorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideExtrapolations")
-    void testExtrapolate(List<String> input, long expected) {
-        long actual = oasisExtrapolator.extrapolate(input);
+    @MethodSource("provideExtrapolationsFuture")
+    void testExtrapolateFuture(List<String> input, long expected) {
+        long actual = oasisExtrapolator.extrapolateFuture(input);
         assertEquals(expected, actual);
     }
 
-    private static Stream<Arguments> provideExtrapolations() {
+    private static Stream<Arguments> provideExtrapolationsFuture() {
         return Stream.of(
                 Arguments.of(listOne(), 18L),
                 Arguments.of(listTwo(), 28L),
                 Arguments.of(listThree(), 68L)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideExtrapolationsHistory")
+    void testExtrapolateHistory(List<String> input, long expected) {
+        long actual = oasisExtrapolator.extrapolateHistory(input);
+        assertEquals(expected, actual);
+    }
+
+    private static Stream<Arguments> provideExtrapolationsHistory() {
+        return Stream.of(
+                Arguments.of(listOne(), -3L),
+                Arguments.of(listTwo(), 0L),
+                Arguments.of(listThree(), 5)
         );
     }
 

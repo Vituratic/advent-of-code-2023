@@ -6,7 +6,6 @@ import java.util.List;
 
 class OASISExtrapolator {
 
-
     public List<String> makePredictions(String input) {
         List<String> predictions = new ArrayList<>();
         predictions.add(input);
@@ -32,13 +31,24 @@ class OASISExtrapolator {
         return input.replace("0", "").isBlank();
     }
 
-    public long extrapolate(List<String> input) {
+    public long extrapolateFuture(List<String> input) {
         long result = 0;
         for (int i = input.size() - 2; i >= 0; i--) {
             List<Long> values = Arrays.stream(input.get(i).split("\\s+"))
                     .map(Long::parseLong)
                     .toList();
             result += values.get(values.size() - 1);
+        }
+        return result;
+    }
+
+    public long extrapolateHistory(List<String> input) {
+        long result = 0;
+        for (int i = input.size() - 2; i >= 0; i--) {
+            List<Long> values = Arrays.stream(input.get(i).split("\\s+"))
+                    .map(Long::parseLong)
+                    .toList();
+            result = (result - values.get(0)) * -1L;
         }
         return result;
     }

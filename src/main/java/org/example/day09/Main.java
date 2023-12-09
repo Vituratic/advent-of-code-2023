@@ -11,12 +11,16 @@ class Main {
     public static void main(String[] args) {
         List<String> inputs = ResourceReader.readAllLinesFromResource("org/example/day09/input.txt");
         OASISExtrapolator oasisExtrapolator = new OASISExtrapolator();
-        long extrapolatedSum = 0L;
+        long extrapolatedSumFuture = 0L;
+        long extrapolatedSumHistory = 0L;
         for (String line : inputs) {
             List<String> predictions = oasisExtrapolator.makePredictions(line);
-            long extrapolate = oasisExtrapolator.extrapolate(predictions);
-            extrapolatedSum += extrapolate;
+            long extrapolateFuture = oasisExtrapolator.extrapolateFuture(predictions);
+            long extrapolateHistory = oasisExtrapolator.extrapolateHistory(predictions);
+            extrapolatedSumFuture += extrapolateFuture;
+            extrapolatedSumHistory += extrapolateHistory;
         }
-        log.info("Sum of extrapolated values: {}", extrapolatedSum);
+        log.info("Sum of extrapolated values for the future: {}", extrapolatedSumFuture);
+        log.info("Sum of extrapolated values for the history: {}", extrapolatedSumHistory);
     }
 }
