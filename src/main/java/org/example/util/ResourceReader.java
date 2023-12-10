@@ -9,7 +9,15 @@ import java.util.List;
 
 public class ResourceReader {
 
-    private ResourceReader() {}
+    private static final String RESOURCE_STRING = "org/example/dayXX/input.txt";
+
+
+    private ResourceReader() {
+    }
+
+    public static List<String> readAllLinesForDay(int day) {
+        return readAllLinesFromResource(RESOURCE_STRING.replace("XX", String.valueOf(day)));
+    }
 
     public static List<String> readAllLinesFromResource(String resourcePath) {
         try {
